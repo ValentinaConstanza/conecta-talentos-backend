@@ -40,7 +40,7 @@ export class EmpresasService {
     return this.empresa;
   }
 
- // obtener por di 
+ // obtener por id
   findOne(id: number) {
     const empresaEncontrada = this.empresa.find(
       (empresa: Empresa) =>
@@ -54,6 +54,12 @@ export class EmpresasService {
 
  //Eliminar una empresa por id 
   remove(id: number) {
-    return `This action removes a #${id} empresa`;
+     const eliminado = this.empresa.find(e => e.id === id);
+    if (!eliminado) {
+      throw new NotFoundException(`Empresa con  id = ${id} no existe`)
+    }
+    this.empresa = this.empresa.filter(e => e.id !== id);
+
+    return `Empresa de id ${id}  ha sido eliminado`;
   }
 }
